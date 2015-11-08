@@ -3,4 +3,9 @@
     <string name="action_settings">Settings</string>
     <string name="enab">Enabled</string>
     <string name="disab">Disabled</string>
+    <string-array name="items">
+        <item>Home</item>
+        <item>About</item>
+        <item>Website</item>
+    </string-array>
 </resources>
