@@ -9,7 +9,7 @@ import com.syncano.library.data.SyncanoObject;
 @SyncanoClass(name = "ltds")
 public class Book extends SyncanoObject{
     public static final String FIELD_LAT = "latitude";
-    public static final String FIELD_LNG = "longitide";
+    public static final String FIELD_LNG = "longitude";
     public static final String FIELD_ALT = "altitude";
     public static final String FIELD_X =   "force_x";
     public static final String FIELD_Y =   "force_y";

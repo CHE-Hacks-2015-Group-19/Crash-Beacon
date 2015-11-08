@@ -51,12 +51,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Criteria criteria = new Criteria();
         String provider = locationManager.getBestProvider(criteria, false);
 
-
         Location location = locationManager.getLastKnownLocation(provider);
 
         // Initialize the location fields
         if (location != null) {
-            onLocationChanged(location);
+           onLocationChanged(location);
         }
     }
 
@@ -84,14 +83,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onCrash(View view){
           isEnabled = !isEnabled;
           gui(isEnabled);
-          final Book book = new Book();
-        book.latitude = 50;
-        book.longitutde = 50;
-        book.altitude = 50;
-        book.force_x = -50;
-        book.force_y = -50;
-        book.force_z = -50;
-        new Network(book, syncano).execute();
+
+
 
     }
     public void gui(boolean state){
@@ -124,24 +117,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //For actual deployment, use lat, alt, and lng variables
         float hLat = 39, hLng = -75, hAlt = 25;
         final Book book = new Book();
-        //book.lat = hLat;
-        //book.lng = hLng;
-        //book.alt = hAlt;
-        //book.fX = x;
-        //book.fY = y;
-        //book.fZ = z;
+        book.latitude = hLat;
+        book.longitutde = hLng;
+        book.altitude = hAlt;
+        book.force_x = x;
+        book.force_y = y;
+        book.force_y = z;
 
 
-        /*if(isEnabled){
-           if(Math.abs(x) > 32 && Math.abs(y) > 25 && Math.abs(z) > 20){
-
-            }
-            else{
-
-            }
-            Response<Book> responseCreateObject = syncano.createObject(book).send();
-            Log.d("data-sent", responseCreateObject.toString());
-        }*/
+        if(isEnabled){
+            new Network(book, syncano);
+        }
     }
 
     @Override

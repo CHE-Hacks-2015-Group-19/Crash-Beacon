@@ -22,12 +22,7 @@ public class Network extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... params) {
        //Response<Book> responseCreateObject = syn.createObject(b).send();
         Log.d("code", String.valueOf(Response.CODE_SUCCESS));
-        Response<List<Book>> responseGetBooks = syn.getObjects(Book.class).send();
-
-        if (responseGetBooks.getResultCode() == Response.CODE_SUCCESS) {
-            List<Book> books = responseGetBooks.getData();
-            Log.d("book", books.toString());
-        }
+        Response<List<Book>> responseGetBooks = syn.createObject(b).send();
         return "Executed";
     }
 }
