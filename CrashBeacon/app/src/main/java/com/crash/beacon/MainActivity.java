@@ -117,9 +117,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //For actual deployment, use lat, alt, and lng variables
         float hLat = 39, hLng = -75, hAlt = 25;
         final Book book = new Book();
-        book.latitude = hLat;
-        book.longitutde = hLng;
-        book.altitude = hAlt;
+        book.latitude = lat;
+        book.longitutde = lng;
+        book.altitude = alt;
         book.force_x = x;
         book.force_y = y;
         book.force_y = z;
