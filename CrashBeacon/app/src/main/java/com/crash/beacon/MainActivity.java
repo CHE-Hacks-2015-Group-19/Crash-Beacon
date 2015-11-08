@@ -1,6 +1,7 @@
 package com.crash.beacon;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -10,14 +11,18 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -25,12 +30,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     boolean isEnabled = false;
     Button btn;
     ListView lv;
-    String[] listItems = {"Home", "About", "Website"};
-    float lat = 0, lng = 0;
+    String[] listItems = new String[]{"Home", "About", "Website"};
+    float lat = 0, lng = 0, alt = 0;
     Sensor accel;
     SensorManager manager;
     float x = 0, y = 0, z = 0;
     DrawerLayout dl;
+    private ActionBarDrawerToggle mDrawerToggle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +64,55 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             onLocationChanged(location);
         }
 
-        dl = (DrawerLayout)findViewById()
+        dl = (DrawerLayout)findViewById(R.id.drawer);
+        lv = (ListView)findViewById(R.id.list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
+        lv.setAdapter(adapter);
+        mDrawerToggle = new ActionBarDrawerToggle(this, dl, R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        lv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if((String)parent.getItemAtPosition(position) == listItems[0]){
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+
+                }
+                else if((String)parent.getItemAtPosition(position) == listItems[1]){
+                    Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
+                    startActivity(intent);
+                }
+                else if((String)parent.getItemAtPosition(position) == listItems[2]){
+                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://www.google.com"));
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        // Set the drawer toggle as the DrawerListener
+        dl.setDrawerListener(mDrawerToggle);
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
@@ -94,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             btn.setText("Disabled");
         }
     }
+
     @Override
     protected void onResume(){
         super.onResume();
@@ -128,11 +183,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public void onLocationChanged(Location location) {
         lat = (float)location.getLatitude();
         lng = (float)location.getLongitude();
+        alt = (float)location.getAltitude();
     }
 
     @Override
