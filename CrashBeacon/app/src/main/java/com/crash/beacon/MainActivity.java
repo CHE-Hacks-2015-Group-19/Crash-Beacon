@@ -2,8 +2,6 @@ package com.crash.beacon;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -55,11 +53,11 @@ public class MainActivity extends AppCompatActivity {
     }
     public void gui(boolean state){
         if(state){
-            btn.setImageBitmap(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.Crash);
+            btn.setImageBitmap(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.crash));
             tv.setText("Enabled");
         }
         else{
-            btn.setImageBitmap(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.CrashG);
+            btn.setImageBitmap(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.crashg));
             tv.setText("Disabled");
         }
     }

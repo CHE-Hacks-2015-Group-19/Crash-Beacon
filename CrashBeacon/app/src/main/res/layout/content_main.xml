@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/crash"
-            android:src="@drawable/Crash"
+            android:src="@drawable/crash"
             android:background="@android:color/transparent"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
