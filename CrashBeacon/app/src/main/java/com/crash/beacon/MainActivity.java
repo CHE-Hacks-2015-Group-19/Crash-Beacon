@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
         if(isEnabled){
-            if(Math.abs(x) > 20 && Math.abs(y) > 20 && Math.abs(z)){
+            if(Math.abs(x) > 20 && Math.abs(y) > 20 && Math.abs(z) > 20){
             new Network(book, syncano).execute();
             }
         }
