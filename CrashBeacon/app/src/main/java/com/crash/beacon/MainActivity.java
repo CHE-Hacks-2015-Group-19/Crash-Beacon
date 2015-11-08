@@ -26,7 +26,7 @@ import com.syncano.library.api.Response;
 public class MainActivity extends AppCompatActivity implements SensorEventListener, LocationListener {
     boolean isEnabled = false;
     Button btn;
-    Syncano syncano;
+    private Syncano syncano;
     String[] listItems = new String[]{"Home", "About", "Website"};
     float lat = 0, lng = 0, alt = 0;
     Sensor accel;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         String provider = locationManager.getBestProvider(criteria, false);
 
 
-        Location location = locationManager.getLastKnownLocation(provider);;
+        Location location = locationManager.getLastKnownLocation(provider);
 
         // Initialize the location fields
         if (location != null) {
@@ -85,14 +85,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
           isEnabled = !isEnabled;
           gui(isEnabled);
           final Book book = new Book();
-        book.lat = 50;
-        book.lng = 50;
-        book.alt = 50;
-        book.fX = -50;
-        book.fY = -50;
-        book.fZ = -50;
-        Response<Book> responseCreateObject = syncano.createObject(book).send();
-        Log.d("data-sent", responseCreateObject.toString());
+        book.latitude = 50;
+        book.longitutde = 50;
+        book.altitude = 50;
+        book.force_x = -50;
+        book.force_y = -50;
+        book.force_z = -50;
+        new Network(book, syncano).execute();
 
     }
     public void gui(boolean state){
@@ -125,12 +124,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //For actual deployment, use lat, alt, and lng variables
         float hLat = 39, hLng = -75, hAlt = 25;
         final Book book = new Book();
-        book.lat = hLat;
-        book.lng = hLng;
-        book.alt = hAlt;
-        book.fX = x;
-        book.fY = y;
-        book.fZ = z;
+        //book.lat = hLat;
+        //book.lng = hLng;
+        //book.alt = hAlt;
+        //book.fX = x;
+        //book.fY = y;
+        //book.fZ = z;
 
 
         /*if(isEnabled){

@@ -6,32 +6,32 @@ import com.syncano.library.data.SyncanoObject;
 /**
  * Created by tom on 11/7/15.
  */
-@SyncanoClass(name = "book")
+@SyncanoClass(name = "ltds")
 public class Book extends SyncanoObject{
     public static final String FIELD_LAT = "latitude";
     public static final String FIELD_LNG = "longitide";
     public static final String FIELD_ALT = "altitude";
     public static final String FIELD_X =   "force_x";
     public static final String FIELD_Y =   "force_y";
-    public static final String FIELD_Z =   "force_Z";
+    public static final String FIELD_Z =   "force_z";
 
     @SyncanoField(name = FIELD_LAT)
-    public float lat;
+    public float latitude;
 
     @SyncanoField(name = FIELD_LNG)
-    public float lng;
+    public float longitutde;
 
     @SyncanoField(name = FIELD_ALT)
-    public float alt;
+    public float altitude;
 
     @SyncanoField(name = FIELD_X)
-    public float fX;
+    public float force_x;
 
     @SyncanoField(name = FIELD_Y)
-    public float fY;
+    public float force_y;
 
     @SyncanoField(name = FIELD_Z)
-    public float fZ;
+    public float force_z;
 
 
 }
