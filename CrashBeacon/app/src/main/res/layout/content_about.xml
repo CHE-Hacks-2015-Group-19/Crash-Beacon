@@ -7,6 +7,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_about" tools:context="com.crash.beacon.AboutActivity">
+    tools:showIn="@layout/activity_main" tools:context=".MainActivity"
+    android:background="#3F51B5"
+    >
+
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:id="@+id/about"
+        android:text="About"
+        android:background="@drawable/corners"
+        android:onClick="onCrash"
+        android:textSize="20dp"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 
 </RelativeLayout>

@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('syncano-android-4.0.1.jar'))

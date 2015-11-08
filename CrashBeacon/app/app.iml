@@ -97,5 +97,7 @@
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="design-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.1.0" level="project" />
+    <orderEntry type="module" module-name="syncano-android-4.0.1" exported="" />
+    <orderEntry type="module" module-name="gson-2.3.1" exported="" />
   </component>
 </module>

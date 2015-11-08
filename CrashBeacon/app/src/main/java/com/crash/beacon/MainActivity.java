@@ -1,8 +1,6 @@
 package com.crash.beacon;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -11,25 +9,24 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+import com.crash.beacon.Book;
+import com.syncano.library.Syncano;
+import com.syncano.library.api.Response;
+
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener, LocationListener {
     boolean isEnabled = false;
     Button btn;
-    ListView lv;
+    Syncano syncano;
     String[] listItems = new String[]{"Home", "About", "Website"};
     float lat = 0, lng = 0, alt = 0;
     Sensor accel;
@@ -42,9 +39,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btn = (Button)findViewById(R.id.crash);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Crash Beacon");
+        syncano = new Syncano("c1464bbe2113d53eba6aa2b73f8baab4f0e9309e", "late-surf-9471");
         gui(isEnabled);
         manager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accel = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -63,56 +58,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (location != null) {
             onLocationChanged(location);
         }
-
-        dl = (DrawerLayout)findViewById(R.id.drawer);
-        lv = (ListView)findViewById(R.id.list);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
-        lv.setAdapter(adapter);
-        mDrawerToggle = new ActionBarDrawerToggle(this, dl, R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-        lv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if((String)parent.getItemAtPosition(position) == listItems[0]){
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-
-                }
-                else if((String)parent.getItemAtPosition(position) == listItems[1]){
-                    Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
-                    startActivity(intent);
-                }
-                else if((String)parent.getItemAtPosition(position) == listItems[2]){
-                    Intent intent = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("http://www.google.com"));
-                    startActivity(intent);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        // Set the drawer toggle as the DrawerListener
-        dl.setDrawerListener(mDrawerToggle);
-
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
@@ -139,6 +84,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onCrash(View view){
           isEnabled = !isEnabled;
           gui(isEnabled);
+          final Book book = new Book();
+        book.lat = 50;
+        book.lng = 50;
+        book.alt = 50;
+        book.fX = -50;
+        book.fY = -50;
+        book.fZ = -50;
+        Response<Book> responseCreateObject = syncano.createObject(book).send();
+        Log.d("data-sent", responseCreateObject.toString());
+
     }
     public void gui(boolean state){
         if(state){
@@ -167,16 +122,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         y = event.values[1];
         z = event.values[2];
         //Demo values
-        //For actual deployment, use lat and lng variables
-        float hLat = 39, hLng = -75;
-        if(isEnabled){
-            if(Math.abs(x) > 32 && Math.abs(y) > 25 && Math.abs(z) > 20){
+        //For actual deployment, use lat, alt, and lng variables
+        float hLat = 39, hLng = -75, hAlt = 25;
+        final Book book = new Book();
+        book.lat = hLat;
+        book.lng = hLng;
+        book.alt = hAlt;
+        book.fX = x;
+        book.fY = y;
+        book.fZ = z;
+
+
+        /*if(isEnabled){
+           if(Math.abs(x) > 32 && Math.abs(y) > 25 && Math.abs(z) > 20){
 
             }
             else{
 
             }
-        }
+            Response<Book> responseCreateObject = syncano.createObject(book).send();
+            Log.d("data-sent", responseCreateObject.toString());
+        }*/
     }
 
     @Override
