@@ -15,7 +15,7 @@
         <ImageButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Alert"
+            android:id="@+id/crash"
             android:src="@drawable/Crash"
             android:background="@android:color/transparent"
             android:layout_alignParentTop="true"
@@ -23,19 +23,19 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/imageButton2" />
+            android:onClick="onCrash" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/disab"
-            android:id="@+id/textView"
+            android:text="@string/enab"
+            android:id="@+id/state"
             android:gravity="center"
-            android:layout_below="@+id/imageButton2"
-            android:layout_centerHorizontal="true"
             android:paddingLeft="10dp"
-            android:textSize="50dp" />
+            android:textSize="50dp"
+            android:layout_below="@+id/crash"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
     </android.support.v4.widget.DrawerLayout>

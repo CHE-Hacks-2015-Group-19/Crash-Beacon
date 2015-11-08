@@ -1,5 +1,6 @@
 package com.crash.beacon;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,16 +9,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
+    boolean isEnabled = false;
+    ImageButton btn;
+    TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        btn = (ImageButton)findViewById(R.id.crash);
+        tv = (TextView)findViewById(R.id.state);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Crash Beacon");
+        gui(isEnabled);
     }
 
     @Override
@@ -40,5 +48,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void onCrash(View view){
+          isEnabled = !isEnabled;
+          gui(isEnabled);
+    }
+    public void gui(boolean state){
+        if(state){
+            btn.setImageBitmap(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.Crash);
+            tv.setText("Enabled");
+        }
+        else{
+            btn.setImageBitmap(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.CrashG);
+            tv.setText("Disabled");
+        }
     }
 }
