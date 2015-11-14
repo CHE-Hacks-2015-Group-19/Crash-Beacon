@@ -1,6 +1,8 @@
 package com.crash.beacon;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import com.crash.beacon.Book;
+import com.firebase.client.Firebase;
 import com.syncano.library.Syncano;
 import com.syncano.library.api.Response;
 
@@ -26,24 +29,23 @@ import com.syncano.library.api.Response;
 public class MainActivity extends AppCompatActivity implements SensorEventListener, LocationListener {
     boolean isEnabled = false;
     Button btn;
-    private Syncano syncano;
     String[] listItems = new String[]{"Home", "About", "Website"};
     float lat = 0, lng = 0, alt = 0;
     Sensor accel;
     SensorManager manager;
+    Firebase base;
     float x = 0, y = 0, z = 0;
-    DrawerLayout dl;
     private ActionBarDrawerToggle mDrawerToggle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Firebase.setAndroidContext(this);
         btn = (Button)findViewById(R.id.crash);
-        syncano = new Syncano("c1464bbe2113d53eba6aa2b73f8baab4f0e9309e", "late-surf-9471");
         gui(isEnabled);
         manager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accel = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
+        base = new Firebase("https://crash-beacon.firebaseio.com");
         // Get the location manager
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         // Define the criteria how to select the locatioin provider -> use
@@ -83,16 +85,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onCrash(View view){
           isEnabled = !isEnabled;
           gui(isEnabled);
-
+          base.child("hello").setValue("Hello Firebase");
 
 
     }
     public void gui(boolean state){
         if(state){
             btn.setText("Enabled");
+            btn.setBackgroundDrawable(getResources().getDrawable(R.drawable.enabled));
         }
         else{
             btn.setText("Disabled");
+            btn.setBackgroundDrawable(getResources().getDrawable(R.drawable.disabled));
+
         }
     }
 
@@ -116,18 +121,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //Demo values
         //For actual deployment, use lat, alt, and lng variables
         float hLat = 39, hLng = -75, hAlt = 25;
-        final Book book = new Book();
-        book.latitude = lat;
-        book.longitutde = lng;
-        book.altitude = alt;
-        book.force_x = x;
-        book.force_y = y;
-        book.force_y = z;
 
 
         if(isEnabled){
             if(Math.abs(x) > 20 && Math.abs(y) > 20 && Math.abs(z) > 20){
-            new Network(book, syncano).execute();
+
             }
         }
     }
