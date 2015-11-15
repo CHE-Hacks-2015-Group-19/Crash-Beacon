@@ -3,9 +3,7 @@ package com.crash.beacon;
 import com.syncano.library.annotation.SyncanoClass;
 import com.syncano.library.annotation.SyncanoField;
 import com.syncano.library.data.SyncanoObject;
-/**
- * Created by tom on 11/7/15.
- */
+
 @SyncanoClass(name = "ltds")
 public class Book extends SyncanoObject{
     public static final String FIELD_LAT = "latitude";
