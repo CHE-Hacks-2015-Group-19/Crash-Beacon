@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btn = (Button)findViewById(R.id.crash);
-        syncano = new Syncano("c1464bbe2113d53eba6aa2b73f8baab4f0e9309e", "late-surf-9471");
+        syncano = new Syncano("<API_KEY>", "<INSTANCE>");
         gui(isEnabled);
         manager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accel = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
