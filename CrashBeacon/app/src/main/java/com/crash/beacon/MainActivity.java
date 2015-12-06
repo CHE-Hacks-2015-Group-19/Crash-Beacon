@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         gui(isEnabled);
         manager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accel = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        base = new Firebase("https://crash-beacon.firebaseio.com");
+        base = new Firebase("https://<API-KEY>.firebaseio.com");
         // Get the location manager
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         // Define the criteria how to select the locatioin provider -> use
